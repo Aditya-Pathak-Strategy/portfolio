@@ -209,7 +209,6 @@
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
     }
 
-    /* Wrap items securely to hide any rogue image border artifacts */
     .strip-wrapper {
       overflow: hidden;
       width: 100%;
@@ -224,7 +223,6 @@
       transition: filter 0.3s ease, transform 0.3s ease;
     }
 
-    /* Image Adjustments */
     .pos-portrait { 
       object-position: center 25%; 
       filter: grayscale(8%) contrast(102%) brightness(95%);
@@ -233,10 +231,9 @@
     .pos-field { 
       object-position: center 15%; 
       filter: grayscale(8%) contrast(102%) brightness(95%);
-      transform: scale(1.02); /* Shaves off the slight uneven white asset margin seen on top */
+      transform: scale(1.02);
     }
     
-    /* Rectified dynamically from image_15f566.jpg: shifts window rightward to ensure you are cleanly inside the column frame */
     .pos-trading { 
       object-position: 85% center; 
       filter: contrast(108%) brightness(112%) saturate(105%); 
@@ -575,7 +572,6 @@
       color: var(--muted);
     }
 
-    /* ── LAYOUT RESPONSIVE ADAPTATIONS ── */
     @media (max-width: 1024px) {
       .hero {
         grid-template-columns: 1fr;
@@ -595,18 +591,18 @@
       .nav-links li:last-child { display: none; }
     }
 
-    /* ── RESEARCH CAROUSEL MODAL SHELLS ── */
+    /* ── CAROUSEL OVERLAY SHELLS ── */
     .research-modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(5,5,9,0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(5,5,9,0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 1.5rem;
     }
 
     .research-modal-overlay.open { display: flex; }
@@ -614,9 +610,9 @@
     .research-modal-panel {
       position: relative;
       width: 100%;
-      max-width: 820px;
+      max-width: 960px;
       height: 100%;
-      max-height: min(720px, 90vh);
+      max-height: 85vh;
       display: flex;
       flex-direction: column;
       background: var(--card);
@@ -627,32 +623,32 @@
 
     .research-modal-close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 32px;
-      height: 32px;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text);
-      font-size: 14px;
+      font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: border-color 0.2s, color 0.2s;
+      transition: all 0.2s;
       z-index: 1010;
     }
 
-    .research-modal-close:hover { border-color: var(--gold); color: var(--gold); }
-    .research-modal-panel.research-modal-panel-iframe { max-width: 980px; }
+    .research-modal-close:hover { border-color: var(--gold); color: var(--gold); transform: scale(1.05); }
     
     .research-modal-iframe {
       display: block;
       width: 100%;
       height: 100%;
       border: 0;
-      background: #09090b;
+      background: #0D0D14;
     }
   </style>
 </head>
@@ -700,25 +696,18 @@
       </div>
     </div>
 
-    <!-- 4-Column Responsive Grid with Secure Framing Wrappers -->
+    <!-- 4-Column Gallery Framework -->
     <div class="hero-gallery-container">
       <div class="photo-strip-grid">
-        <!-- Panel 1 -->
         <div class="strip-wrapper">
           <img src="Portrait.png" alt="Executive Leadership Portrait" class="strip-item pos-portrait" />
         </div>
-        
-        <!-- Panel 2 -->
         <div class="strip-wrapper">
           <img src="Field Photo.jpg" alt="Refinery Operations Field Work" class="strip-item pos-field" />
         </div>
-        
-        <!-- Panel 3: Focus window shifted dynamically rightward to keep you visible -->
         <div class="strip-wrapper">
           <img src="Trading Photo.jpg" alt="Strategic Analytical Operations Desk" class="strip-item pos-trading" />
         </div>
-        
-        <!-- Panel 4 -->
         <div class="strip-wrapper">
           <img src="IEW Photo.jpg" alt="Energy Forum Delegate Workspace" class="strip-item pos-iew" />
         </div>
@@ -812,7 +801,7 @@
 
     <div class="research-grid" id="researchGrid">
       <!-- CARD 1 -->
-      <div class="card" data-category="feedstock" onclick="openCarousel()" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openCarousel()">
+      <div class="card" data-category="feedstock" onclick="openCarousel(1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openCarousel(1)">
         <div class="card-meta">
           <span class="card-tag">Feedstock</span>
           <span class="card-status live">Live</span>
@@ -828,14 +817,14 @@
       </div>
 
       <!-- CARD 2 -->
-      <div class="card" data-category="supply" onclick="openCarousel2()" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openCarousel2()">
+      <div class="card" data-category="supply" onclick="openCarousel(2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openCarousel(2)">
         <div class="card-meta">
           <span class="card-tag">Supply Dynamics</span>
           <span class="card-status live">Live</span>
         </div>
         <h3 class="card-title">The GCC Polyolefins Paradox: Re-Anchoring the Feedstock Advantage in an Inverted Market</h3>
         <p class="card-tension">
-          “The Gulf’s decades-old petrochemical advantage—cheap ethane converted into commodity polyolefins for Asian demand—is confronting a structural reversal as China transforms from the world’s largest importer into an aggressive exporter. As spot margins compress and trade barriers rise, this analysis explores why GCC producers must either pivot toward high-barrier circular value chains or deploy capital globally to secure downstream competitiveness.”
+          “The Gulf’s decades-old petrochemical advantage—cheap ethane converted into commodity polyolefins for Asian demand—is confronting a structural reversal as China transforms from the world’s largest importer into an aggressive exporter.”
         </p>
         <div class="card-footer">
           <span class="card-anchor">ICIS · S&amp;P Global · McKinsey Chemicals</span>
@@ -860,14 +849,14 @@
       </div>
 
       <!-- CARD 4 -->
-      <div class="card" data-category="transition" onclick="openCarousel3()" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openCarousel3()">
+      <div class="card" data-category="transition" onclick="openCarousel(3)" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openCarousel(3)">
         <div class="card-meta">
           <span class="card-tag">Energy Transition</span>
           <span class="card-status live">Live</span>
         </div>
         <h3 class="card-title">The Green Hydrogen Reality Check: Why Refining Will Decarbonize Before the Hydrogen Market Matures</h3>
         <p class="card-tension">
-          “Boardrooms are committing capital to green hydrogen now, even though the LCOH math says grey and blue routes will keep refineries compliant years before green reaches cost parity. This analysis maps the cost curves, the narrowing policy window, and why Gulf producers are better positioned to own hydrogen demand than the molecule itself.”
+          “Boardrooms are committing capital to green hydrogen now, even though the LCOH math says grey and blue routes will keep refineries compliant years before green reaches cost parity.”
         </p>
         <div class="card-footer">
           <span class="card-anchor">IRENA · IEA Hydrogen · Bloomberg NEF</span>
@@ -883,7 +872,7 @@
         </div>
         <h3 class="card-title">The Polyester Chain Under Pressure: Overcapacity, Fast Fashion, and the Recycling Inflection</h3>
         <p class="card-tension">
-          “China built a polyester empire on cheap PTA and MEG. Now EPR mandates, recycled content targets, and slowing fast-fashion demand are restructuring the chain — with knock-on effects for Gulf MEG producers.”
+          “China built a polyester empire on cheap PTA and MEG. Now EPR mandates, recycled content targets, and slowing fast-fashion demand are restructuring the chain.”
         </p>
         <div class="card-footer">
           <span class="card-anchor">ICIS · Roland Berger · Textile Exchange</span>
@@ -912,64 +901,116 @@
     <p>Energy Strategy · Petrochemicals · US &amp; Gulf Markets</p>
   </footer>
 
-  <!-- MODAL CAROUSEL WRAPPERS -->
-  <div class="research-modal-overlay" id="carouselModal" onclick="if(event.target===this)closeCarousel()">
-    <div class="research-modal-panel research-modal-panel-iframe">
-      <button class="research-modal-close" onclick="closeCarousel()" aria-label="Close research carousel">✕</button>
-      <iframe class="research-modal-iframe" id="carouselFrame1"></iframe>
-    </div>
-  </div>
-
-  <div class="research-modal-overlay" id="carouselModal2" onclick="if(event.target===this)closeCarousel2()">
-    <div class="research-modal-panel research-modal-panel-iframe">
-      <button class="research-modal-close" onclick="closeCarousel2()" aria-label="Close research carousel">✕</button>
-      <iframe class="research-modal-iframe" id="carouselFrame2"></iframe>
-    </div>
-  </div>
-
-  <div class="research-modal-overlay" id="carouselModal3" onclick="if(event.target===this)closeCarousel3()">
-    <div class="research-modal-panel research-modal-panel-iframe">
-      <button class="research-modal-close" onclick="closeCarousel3()" aria-label="Close research carousel">✕</button>
-      <iframe class="research-modal-iframe" id="carouselFrame3"></iframe>
+  <!-- CENTRAL DYNAMIC MODAL OVERLAY -->
+  <div class="research-modal-overlay" id="globalModal" onclick="if(event.target===this)closeGlobalModal()">
+    <div class="research-modal-panel">
+      <button class="research-modal-close" onclick="closeGlobalModal()" aria-label="Close panel">✕</button>
+      <iframe class="research-modal-iframe" id="globalModalFrame"></iframe>
     </div>
   </div>
 
   <script>
-    const ETHANE_CAROUSEL_SRCDOC = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          * { box-sizing: border-box; margin: 0; padding: 0; }
-          body { font-family: sans-serif; background: #1A1A26; color: #F0EBE0; padding: 1rem; }
-          h1 { font-size: 20px; color: #C8A96E; margin-bottom: 1rem; }
-          p { font-size: 14px; color: #8A8590; line-height: 1.6; }
-        </style>
-      </head>
-      <body>
-        <h1>The 2025 US Ethane Export Disruption</h1>
-        <p>Dynamic insight pages are rendered seamlessly across both viewports with standardized cross-scrolling logic.</p>
-      </body>
-      </html>
-    `;
+    // ── DATA FOR CAROUSELS ──
+    const CAROUSEL_DOCS = {
+      1: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: system-ui, -apple-system, sans-serif; background: #14141E; color: #F0EBE0; padding: 2.5rem; line-height: 1.7; }
+            h1 { font-family: Georgia, serif; color: #C8A96E; font-size: 24px; margin-bottom: 1rem; border-bottom: 1px solid #2A2A3A; padding-bottom: 0.5rem; }
+            h2 { color: #C8A96E; font-size: 16px; font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 1.5rem; }
+            p { font-size: 14.5px; color: #B0A9B6; margin-bottom: 1rem; }
+            .badge { background: rgba(200,169,110,0.1); color: #C8A96E; padding: 0.2rem 0.5rem; font-size: 11px; font-family: monospace; display: inline-block; margin-bottom: 1rem; }
+          </style>
+        </head>
+        <body>
+          <span class="badge">FEEDSTOCK BRIEF</span>
+          <h1>The 2025 US Ethane Export Disruption</h1>
+          <h2>Context &amp; Situation</h2>
+          <p>The 40-day logistical window freeze highlighted systemic dependencies within global trade channels routing US shale ethane to downstream global manufacturing hubs.</p>
+          <h2>The Strategic Tension</h2>
+          <p>While prompt hedging models insulated short-term cargo margins, the extended closure forced an immediate reassessment of supply chain buffer logic among international receivers.</p>
+          <h2>US &amp; Gulf Ecosystem Implications</h2>
+          <p>Strategic capacity models indicate that infrastructural redundancy will outpace absolute supply-side limits by early 2026, making geographic optionality the core driver of long-term commercial agreements.</p>
+        </body>
+        </html>
+      `,
+      2: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: system-ui, -apple-system, sans-serif; background: #14141E; color: #F0EBE0; padding: 2.5rem; line-height: 1.7; }
+            h1 { font-family: Georgia, serif; color: #C8A96E; font-size: 24px; margin-bottom: 1rem; border-bottom: 1px solid #2A2A3A; padding-bottom: 0.5rem; }
+            h2 { color: #C8A96E; font-size: 16px; font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 1.5rem; }
+            p { font-size: 14.5px; color: #B0A9B6; margin-bottom: 1rem; }
+            .badge { background: rgba(200,169,110,0.1); color: #C8A96E; padding: 0.2rem 0.5rem; font-size: 11px; font-family: monospace; display: inline-block; margin-bottom: 1rem; }
+          </style>
+        </head>
+        <body>
+          <span class="badge">SUPPLY DYNAMICS BRIEF</span>
+          <h1>The GCC Polyolefins Paradox</h1>
+          <h2>Context &amp; Strategic Inversion</h2>
+          <p>For decades, the standard play for the Gulf was converting low-cost domestic ethane into commodity polyolefins targeted for high-growth Asian consumption frameworks. This baseline paradigm is undergoing structural disruption as China builds out internal capacities rapidly.</p>
+          <h2>The Central Tension</h2>
+          <p>As absolute import dependency levels compress in key target sectors, traditional cost leadership metrics lose relative strategic leverage against shifting regional trade protections and local logistics advantages.</p>
+          <h2>Strategic Paths for Producers</h2>
+          <p>Producers are looking to deploy structural capital directly into downstream assets inside end-user markets, balancing asset footprints and transitioning to premium, high-barrier circular value portfolios to defend legacy margins.</p>
+        </body>
+        </html>
+      `,
+      3: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: system-ui, -apple-system, sans-serif; background: #14141E; color: #F0EBE0; padding: 2.5rem; line-height: 1.7; }
+            h1 { font-family: Georgia, serif; color: #C8A96E; font-size: 24px; margin-bottom: 1rem; border-bottom: 1px solid #2A2A3A; padding-bottom: 0.5rem; }
+            h2 { color: #C8A96E; font-size: 16px; font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 1.5rem; }
+            p { font-size: 14.5px; color: #B0A9B6; margin-bottom: 1rem; }
+            .badge { background: rgba(200,169,110,0.1); color: #C8A96E; padding: 0.2rem 0.5rem; font-size: 11px; font-family: monospace; display: inline-block; margin-bottom: 1rem; }
+          </style>
+        </head>
+        <body>
+          <span class="badge">ENERGY TRANSITION BRIEF</span>
+          <h1>The Green Hydrogen Reality Check</h1>
+          <h2>Context &amp; Current Parameters</h2>
+          <p>Refining complexes present clear targets for asset decarbonization efforts globally. However, real-world Levelized Cost of Hydrogen (LCOH) trajectories reveal significant execution variances from theoretical industry projections.</p>
+          <h2>The Operational Tension</h2>
+          <p>While corporate mandates push early capital allocations toward pure-green infrastructure development, legacy grey and intermediate blue operational routes provide necessary compliance stability and cost parity advantages over immediate horizons.</p>
+          <h2>Strategic Position Options</h2>
+          <p>Refiners are pivoting asset strategy from simply producing alternative molecules to controlling localized pipeline networks and distribution points, positioning asset portfolios to manage demand without over-committing to high early capital expenses.</p>
+        </body>
+        </html>
+      `
+    };
 
-    function openCarousel() {
-      const modal = document.getElementById('carouselModal');
-      const frame = document.getElementById('carouselFrame1');
-      if (!frame.srcdoc) { frame.srcdoc = ETHANE_CAROUSEL_SRCDOC; }
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
+    // ── ACTIVE CORE FUNCTIONS ──
+    function openCarousel(id) {
+      const modal = document.getElementById('globalModal');
+      const frame = document.getElementById('globalModalFrame');
+      
+      if (CAROUSEL_DOCS[id]) {
+        frame.srcdoc = CAROUSEL_DOCS[id];
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
     }
-    function closeCarousel() { document.getElementById('carouselModal').classList.remove('open'); document.body.style.overflow = ''; }
-    function openCarousel2() { document.getElementById('carouselModal2').classList.add('open'); document.body.style.overflow = 'hidden'; }
-    function closeCarousel2() { document.getElementById('carouselModal2').classList.remove('open'); document.body.style.overflow = ''; }
-    function openCarousel3() { document.getElementById('carouselModal3').classList.add('open'); document.body.style.overflow = 'hidden'; }
-    function closeCarousel3() { document.getElementById('carouselModal3').classList.remove('open'); document.body.style.overflow = ''; }
+
+    function closeGlobalModal() {
+      const modal = document.getElementById('globalModal');
+      const frame = document.getElementById('globalModalFrame');
+      modal.classList.remove('open');
+      frame.srcdoc = '';
+      document.body.style.overflow = '';
+    }
 
     window.addEventListener('keydown', e => {
-      if (e.key === 'Escape') { closeCarousel(); closeCarousel2(); closeCarousel3(); }
+      if (e.key === 'Escape') closeGlobalModal();
     });
 
     function filterCards(category, btn) {
